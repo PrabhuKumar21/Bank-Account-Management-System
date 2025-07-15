@@ -1,15 +1,14 @@
 package com.bams.entity;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import lombok.*;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Entity
@@ -17,22 +16,31 @@ import org.springframework.boot.autoconfigure.domain.EntityScan;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Table
 public class User {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	String id;
-	String name;
-	String email;
-	String password;
-	String role;
-	
-	
+	private long user_id;
 
+	@Column(nullable = false)
+	@NotBlank
+	private String name;
 
+	@Column(unique = true,nullable = false)
+	@Email
+	private String email;
 
+	@Column(nullable = false)
+	@NotBlank
+	private String password;
 
-	
+	@Column(nullable = false)
+	@Enumerated(EnumType.STRING)
+	private Role role;
+
+	@OneToMany(mappedBy = "user",cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	private List<Account> accounts=new ArrayList<>();
 
 
 }
