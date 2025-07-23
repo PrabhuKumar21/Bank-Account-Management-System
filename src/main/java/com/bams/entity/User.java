@@ -47,12 +47,12 @@ public class User {
 	@NotBlank
 	private String password;
 
-	@Column(nullable = false)
+	@Column(nullable = false,length = 20)
 	@Enumerated(EnumType.STRING)
 	private Role role;
 
-	@Column(nullable = false,length=15)
-	@Pattern(regexp = "^\\+?[0-9]{10,15}$", message = "Invalid phone number")
+	@Column(nullable = false,length=11)
+	@Pattern(regexp = "^[0-9]{10}$", message = "Phone number must be exactly 10 digits")
 	private String phone_num;
 
 	@OneToMany(mappedBy = "user",cascade = CascadeType.ALL, fetch = FetchType.LAZY)
