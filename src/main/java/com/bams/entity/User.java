@@ -1,7 +1,10 @@
 package com.bams.entity;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+
+import com.bams.customvalidations.ValidAge;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -16,6 +19,7 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -42,6 +46,10 @@ public class User {
 	@Column(unique = true,nullable = false)
 	@Email
 	private String email;
+	
+	@Column(nullable=false)
+	@ValidAge(minAge=18)
+	private LocalDate dob;
 
 	@Column(nullable = false)
 	@NotBlank
@@ -51,7 +59,7 @@ public class User {
 	@Enumerated(EnumType.STRING)
 	private Role role;
 
-	@Column(nullable = false,length=11)
+	@Column(nullable = false,length=10)
 	@Pattern(regexp = "^[6-9]\\d{9}$", message = "Phone number must be exactly 10 digits")
 	private String phone_num;
 
