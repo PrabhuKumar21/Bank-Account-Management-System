@@ -52,7 +52,7 @@ public class User {
 	private Role role;
 
 	@Column(nullable = false,length=11)
-	@Pattern(regexp = "^[0-9]{10}$", message = "Phone number must be exactly 10 digits")
+	@Pattern(regexp = "^[6-9]\\d{9}$", message = "Phone number must be exactly 10 digits")
 	private String phone_num;
 
 	@OneToMany(mappedBy = "user",cascade = CascadeType.ALL, fetch = FetchType.LAZY)

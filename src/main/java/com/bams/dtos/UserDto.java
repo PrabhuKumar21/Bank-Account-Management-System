@@ -1,3 +1,4 @@
+
 package com.bams.dtos;
 
 import com.bams.entity.Role;
@@ -9,7 +10,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
+ 
 @Getter
 @Setter
 @AllArgsConstructor
@@ -25,7 +26,7 @@ public class UserDto {
     @NotBlank
     private String password;
 
-    @Pattern(regexp = "^\\+?[0-9]{10,15}$", message = "Invalid phone number")
+    @Pattern(regexp = "^[6-9]\\d{9}$", message = "Invalid phone number")
     private String phone_num;
 
 }
