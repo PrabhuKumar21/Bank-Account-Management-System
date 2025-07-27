@@ -53,7 +53,12 @@ public class User {
 
 	@Column(nullable = false)
 	@NotBlank
+	@Pattern(
+			regexp = "^(?=.*[0-9])(?=.*[A-Z])(?=.*[a-z])(?=.*[@#$%^&+=!]).{8,}$",
+			message = "Password must be at least 8 characters long, include one uppercase, one lowercase, one digit, and one special character"
+	)
 	private String password;
+
 
 	@Column(nullable = false,length = 20)
 	@Enumerated(EnumType.STRING)
