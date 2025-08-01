@@ -11,13 +11,26 @@ import lombok.Setter;
 
 import java.math.BigDecimal;
 
+import org.springframework.stereotype.Component;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Component
 public class AccountDto {
 
-    private AccountType accountType;
+	Long userId;
+
+	private String accountNumber;
+
+	@Enumerated(EnumType.STRING)
+	private Status status;
+
+	private BigDecimal balance;
+
+	@Enumerated(EnumType.STRING)
+
+	private AccountType accountType;
 
 }

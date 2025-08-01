@@ -45,13 +45,6 @@ public class UserController {
 //  GET /bank/user/all → Get all users.
     
     
-    
-    
-    
-    
-    
-    
-    
 //  PUT /bank/user/{id} → Update user details.
 //  DELETE /bank/user/{id} → Delete user.
 //  GET /bank/user/{id}/accounts → Get all accounts of a user.
