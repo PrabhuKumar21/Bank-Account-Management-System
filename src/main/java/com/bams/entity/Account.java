@@ -41,10 +41,10 @@ public class Account {
     @JoinColumn(name="user_id")
     private User user;
 
-    @OneToMany(mappedBy = "account_from")
+    @OneToMany(mappedBy = "senderAccount")
     private List<Transaction> transaction_from;
 
-    @OneToMany(mappedBy = "account_to")
+    @OneToMany(mappedBy = "receiverAccount")
     private List<Transaction> transaction_to;
 
 

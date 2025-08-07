@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table
+@Table(name="Transactions")
 @Entity
 public class Transaction {
 
@@ -22,12 +22,12 @@ public class Transaction {
     private long transaction_id;
 
     @ManyToOne
-    @JoinColumn(name="account_from_id", referencedColumnName = "account_id")
-    private Account account_from;
+    @JoinColumn(name="account_from_id", referencedColumnName = "account_id",nullable = true)
+    private Account senderAccount;
 
     @ManyToOne
-    @JoinColumn(name="account_to_id", referencedColumnName = "account_id")
-    private Account account_to;
+    @JoinColumn(name="account_to_id", referencedColumnName = "account_id",nullable = true)
+    private Account receiverAccount;
 
     @Column(nullable = false)
     private BigDecimal amount;
@@ -37,6 +37,12 @@ public class Transaction {
 
 
     private LocalDateTime transaction_time;
+
+    @PrePersist
+    public void prePersist(){
+        this.transaction_time=LocalDateTime.now();
+    }
+
 
 
 }
