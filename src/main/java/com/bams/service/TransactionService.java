@@ -46,7 +46,7 @@ public class TransactionService {
         Transaction transaction= new Transaction();
         transaction.setReceiverAccount(accountDetails);
         transaction.setAmount(depositAmount);
-        transaction.setTransaction_type(TransactionType.DEPOSIT);
+        transaction.setTransactionType(TransactionType.DEPOSIT);
         transactionRepository.save(transaction);
 
         return modelMapper.map(transaction,TransactionDto.class);
@@ -76,7 +76,7 @@ public class TransactionService {
 
         Transaction transaction = new Transaction();
         transaction.setSenderAccount(accountDetails);
-        transaction.setTransaction_type(TransactionType.WITHDRAW);
+        transaction.setTransactionType(TransactionType.WITHDRAW);
         transaction.setAmount(withdrawAmount);
 
         transactionRepository.save(transaction);
@@ -109,7 +109,7 @@ public class TransactionService {
         accountRepository.save(receiverAccount);
 
         Transaction transaction= new Transaction();
-        transaction.setTransaction_type(TransactionType.TRANSFER);
+        transaction.setTransactionType(TransactionType.TRANSFER);
         transaction.setAmount(amount);
         transaction.setSenderAccount(senderAccount);
         transaction.setReceiverAccount(receiverAccount);
@@ -126,4 +126,19 @@ public class TransactionService {
         return transactionRepository.findBySenderAccountOrReceiverAccount(accountDetails,accountDetails);
 
     }
+
+    public List<Transaction> getAllTransactionsByType(TransactionType transactionType) {
+
+        return transactionRepository.findByTransactionType(transactionType);
+
+
+
+    }
+
+
+
+
+
+
+
 }

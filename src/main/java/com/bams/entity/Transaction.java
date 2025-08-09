@@ -32,8 +32,9 @@ public class Transaction {
     @Column(nullable = false)
     private BigDecimal amount;
 
+    @Column(name="transactionType")
     @Enumerated(EnumType.STRING)
-    private TransactionType transaction_type;
+    private TransactionType transactionType;
 
 
     private LocalDateTime transaction_time;

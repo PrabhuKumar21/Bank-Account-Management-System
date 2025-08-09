@@ -3,6 +3,7 @@ package com.bams.controller;
 import com.bams.dtos.AccountDto;
 import com.bams.dtos.TransactionDto;
 import com.bams.entity.Transaction;
+import com.bams.entity.TransactionType;
 import com.bams.exception.InsufficientBalanceException;
 import com.bams.service.TransactionService;
 import com.fasterxml.jackson.core.util.RecyclerPool;
@@ -50,5 +51,10 @@ public class TransactionController {
         return ResponseEntity.ok(transactionList);
     }
 
+    @GetMapping("/type/{transactionType}")
+    public ResponseEntity<List<Transaction>> getAllTransactionsByTransactionType(@PathVariable TransactionType transactionType){
+        List<Transaction> transactions = transactionService.getAllTransactionsByType(transactionType);
+        return ResponseEntity.ok(transactions);
+    }
 
 }
