@@ -2,12 +2,15 @@ package com.bams.controller;
 
 import com.bams.dtos.AccountDto;
 import com.bams.dtos.TransactionDto;
+import com.bams.entity.Transaction;
 import com.bams.exception.InsufficientBalanceException;
 import com.bams.service.TransactionService;
+import com.fasterxml.jackson.core.util.RecyclerPool;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.security.auth.login.AccountNotFoundException;
+import java.util.List;
 
 @RestController
 @RequestMapping("/bank/transaction")
@@ -41,6 +44,11 @@ public class TransactionController {
     }
 
 
+    @GetMapping("/{accountId}")
+    public ResponseEntity<List<Transaction>> getAllTransactions(@PathVariable Long accountId) throws AccountNotFoundException {
+        List<Transaction> transactionList = transactionService.allTransactionsByAccountId(accountId);
+        return ResponseEntity.ok(transactionList);
+    }
 
 
 }

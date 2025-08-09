@@ -12,8 +12,8 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import javax.security.auth.login.AccountNotFoundException;
-import javax.swing.text.html.Option;
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -119,8 +119,11 @@ public class TransactionService {
     }
 
 
+    public List<Transaction> allTransactionsByAccountId(Long accountId) throws AccountNotFoundException {
+        Account accountDetails= accountRepository.findById(accountId)
+                .orElseThrow(()->new AccountNotFoundException("No Account found with this id"));
 
+        return transactionRepository.findBySenderAccountOrReceiverAccount(accountDetails,accountDetails);
 
-
-
+    }
 }
