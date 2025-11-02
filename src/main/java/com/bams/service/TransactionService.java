@@ -4,15 +4,19 @@ import com.bams.dtos.TransactionDto;
 import com.bams.entity.Account;
 import com.bams.entity.Transaction;
 import com.bams.entity.TransactionType;
+import com.bams.entity.User;
 import com.bams.exception.InsufficientBalanceException;
+import com.bams.exception.UserNotFoundException;
 import com.bams.repository.AccountRepository;
 import com.bams.repository.TransactionRepository;
+import com.bams.repository.UserRepository;
 import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import javax.security.auth.login.AccountNotFoundException;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,9 +29,12 @@ public class TransactionService {
 
    private final AccountRepository accountRepository;
 
-    public TransactionService(TransactionRepository transactionRepository, AccountRepository accountRepository) {
+   private final UserRepository userRepository;
+
+    public TransactionService(TransactionRepository transactionRepository, AccountRepository accountRepository, UserRepository userRepository) {
         this.transactionRepository = transactionRepository;
         this.accountRepository = accountRepository;
+        this.userRepository = userRepository;
     }
 
 
@@ -133,6 +140,28 @@ public class TransactionService {
 
 
 
+    }
+
+    //Get all trasanctions by user id
+    public List<Transaction> getAllTransactionsByIdUser(Long userId) throws UserNotFoundException{
+
+        //First find out the user with id
+        User userDetails = userRepository.findById(userId)
+                .orElseThrow(()-> new UserNotFoundException("NO user found with this id"));
+
+        // next with user details find all accounts linked with this user.
+        List<Account> userAccounts= accountRepository.findByUser(userDetails);
+
+
+        //All transactions related to that account
+        List<Transaction> TransactionList = new ArrayList<>();
+        for(Account  account: userAccounts){
+            List<Transaction> transactions = transactionRepository.findBySenderAccountOrReceiverAccount(account,account);
+
+            TransactionList.addAll(transactions);
+        }
+
+        return TransactionList;
     }
 
 

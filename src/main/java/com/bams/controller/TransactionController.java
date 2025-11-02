@@ -45,7 +45,7 @@ public class TransactionController {
     }
 
 
-    @GetMapping("/{accountId}")
+    @GetMapping("/account/{accountId}")
     public ResponseEntity<List<Transaction>> getAllTransactions(@PathVariable Long accountId) throws AccountNotFoundException {
         List<Transaction> transactionList = transactionService.allTransactionsByAccountId(accountId);
         return ResponseEntity.ok(transactionList);
@@ -55,6 +55,13 @@ public class TransactionController {
     public ResponseEntity<List<Transaction>> getAllTransactionsByTransactionType(@PathVariable TransactionType transactionType){
         List<Transaction> transactions = transactionService.getAllTransactionsByType(transactionType);
         return ResponseEntity.ok(transactions);
+    }
+
+    //Get all transactions by user id
+    @GetMapping("/user/{userId}")
+    public ResponseEntity<List<Transaction>> getAllTransactionsByUserId(@PathVariable Long userId){
+        List<Transaction> listOfTransactions= transactionService.getAllTransactionsByIdUser(userId);
+        return ResponseEntity.ok(listOfTransactions);
     }
 
 }
